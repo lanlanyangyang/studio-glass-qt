@@ -34,4 +34,6 @@ Actual Windows desktop input verified an immediate single action receipt, light-
 
 GitHub Actions defines an offscreen Python 3.11 matrix across Windows/Linux/macOS and both bindings; configured jobs are not passed jobs. Consult the repository Actions page for the result of the exact commit you use.
 
+The initial CI run passed both Windows and both macOS jobs. Both Ubuntu jobs stopped at QtGui import because `libEGL.so.1` was missing. The workflow now installs `libegl1` and `libopengl0` explicitly on Linux, with the same requirement documented for users. The rerun result is available on Actions; an initial failure remains visible in history.
+
 No human macOS/Linux acceptance, exhaustive Qt-version sweep, screen-reader matrix, native OS reduced-motion synchronization, commercial deployment validation or numerical performance benchmark is claimed. Material caches retain one bitmap per live surface; no whole-window or desktop capture is used by the library. Screenshots from the demo are explicitly requested by its `--snapshot` tool only.

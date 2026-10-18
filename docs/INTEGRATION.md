@@ -61,6 +61,7 @@ For an existing application, attach a controller to the smallest subtree you wan
 - **Popup wrong color:** remove conflicting host QSS for QListView/combos; report a minimal example. The library reapplies its own popup palette at every opening.
 - **No OS theme notification:** use manual mode; Qt plugin support differs by platform.
 - **No display server / xcb error:** use `QT_QPA_PLATFORM=offscreen` for automation, or provide a display for interactive use. Offscreen rendering is not user acceptance.
+- **Linux `libEGL.so.1` / `libOpenGL.so.0` missing:** install your distribution's Qt graphics runtime libraries. Ubuntu/Debian: `sudo apt-get install libegl1 libopengl0`. Even the offscreen plugin loads QtGui's shared-library dependencies; an interactive X11 installation may need additional platform packages.
 - **Subtle effect:** use the optional background, and compare 0/60%. It is intentionally a light material rather than a blur filter.
 
 Official references: [QComboBox](https://doc.qt.io/qt-6/qcombobox.html), [QStyleHints](https://doc.qt.io/qt-6/qstylehints.html#colorScheme-prop), [High DPI](https://doc.qt.io/qt-6.8/highdpi.html), [packaging optional dependencies](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#dependencies-optional-dependencies).
