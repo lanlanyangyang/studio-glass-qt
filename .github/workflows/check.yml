@@ -1,0 +1,29 @@
+name: Qt widget checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  widgets:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        binding: [pyqt6, pyside6]
+    runs-on: ${{ matrix.os }}
+    env:
+      QT_QPA_PLATFORM: offscreen
+      STUDIOGLASS_QT_API: ${{ matrix.binding }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install ".[${{ matrix.binding }}]" build
+      - run: python -m unittest discover -s tests -v
+      - run: python -m build
+      - run: python -m pip install --force-reinstall --no-deps dist/studio_glass_qt-0.1.0-py3-none-any.whl
+      - run: python -m studioglass --snapshot demo.png --no-motion
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gallery-${{ matrix.os }}-${{ matrix.binding }}
+          path: demo.png

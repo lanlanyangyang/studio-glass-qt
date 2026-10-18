@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "studio-glass-qt"
+version = "0.1.0"
+description = "Lightweight glass-style controls for Qt 6 Widgets, with PyQt6 and PySide6 support"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{name = "lanlanyangyang"}]
+keywords = ["qt", "pyqt6", "pyside6", "widgets", "glass", "desktop"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: User Interfaces",
+]
+
+[project.optional-dependencies]
+pyqt6 = ["PyQt6>=6.5,<7"]
+pyside6 = ["PySide6-Essentials>=6.5,<7"]
+
+[project.urls]
+Homepage = "https://github.com/lanlanyangyang/studio-glass-qt"
+Issues = "https://github.com/lanlanyangyang/studio-glass-qt/issues"
+
+[project.gui-scripts]
+studio-glass-demo = "studioglass.demo:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
