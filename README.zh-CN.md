@@ -15,6 +15,8 @@
 
 要求 Python 3.10+，任选一个Qt绑定。**尚未发布PyPI**，不能直接用 `pip install studio-glass-qt` 从PyPI获取。
 
+`[pyside6]`只安装官方Essentials基础模块；Python低于3.12时排除6.12.0，因为Linux CI的纯Qt探针复现了引用计数异常。请通过本库extra安装，具体范围和证据见验证记录。
+
 Windows PowerShell：
 
 ```powershell

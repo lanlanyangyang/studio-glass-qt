@@ -34,6 +34,10 @@ Actual Windows desktop input verified an immediate single action receipt, light-
 
 GitHub Actions defines an offscreen Python 3.11 matrix across Windows/Linux/macOS and both bindings; configured jobs are not passed jobs. Consult the repository Actions page for the result of the exact commit you use.
 
-The initial CI run passed both Windows and both macOS jobs. Both Ubuntu jobs stopped at QtGui import because `libEGL.so.1` was missing. The workflow now installs `libegl1` and `libopengl0` explicitly on Linux, with the same requirement documented for users. The rerun result is available on Actions; an initial failure remains visible in history.
+The initial CI run passed both Windows and both macOS jobs. Both Ubuntu jobs stopped at QtGui import because `libEGL.so.1` was missing. The workflow now installs `libegl1` and `libopengl0` explicitly on Linux, with the same requirement documented for users.
+
+After that, Linux / Python 3.11.17 / PySide6-Essentials 6.12.0 passed all assertions but crashed at interpreter shutdown (`none_dealloc`). A separate CI process importing **only PySide6**, not this library, observed None references falling 5178 → 4978 after 200 `QLabel.setText` calls and then to 4780 after 200 `processEvents` calls. This isolates a runtime-level problem; no upstream issue or exact build/ABI root cause is claimed. The optional dependency excludes 6.12.0 on Python <3.12. CI retains the bare-Qt check for the replacement version, full tests/normal exit, and an additional Python 3.12 Linux/PySide job. Earlier failures remain in Actions history.
+
+A macOS run exposed a timing-sensitive test that slept exactly 270ms for a 240ms animation. The check now waits, with a 2s bound, for the animation's stopped state before asserting its final rectangle. The animation duration itself is unchanged.
 
 No human macOS/Linux acceptance, exhaustive Qt-version sweep, screen-reader matrix, native OS reduced-motion synchronization, commercial deployment validation or numerical performance benchmark is claimed. Material caches retain one bitmap per live surface; no whole-window or desktop capture is used by the library. Screenshots from the demo are explicitly requested by its `--snapshot` tool only.

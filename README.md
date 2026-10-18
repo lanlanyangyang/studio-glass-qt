@@ -16,6 +16,7 @@ These are widget-rendered gallery snapshots, not proof of native platform blur o
 Python 3.10+ and one Qt binding are required. This project is **not published on PyPI**.
 
 The `pyside6` extra installs the official **PySide6-Essentials** wheel, which supplies Core/Gui/Widgets/QtTest without downloading WebEngine or other unused Addons.
+On Python <3.12 it excludes 6.12.0 after a bare-Qt reference-count failure reproduced in Linux CI; use the supplied extra when installing. See [validation details](docs/VALIDATION.md).
 
 ```sh
 python -m venv .venv

@@ -91,7 +91,11 @@ class WidgetContracts(unittest.TestCase):
         current = C.QRectF(nav._selection)
         nav.setCurrentIndex(0)
         self.assertEqual(nav.slide_animation.startValue(),current)
-        QTest.qWait(270)
+        deadline = C.QElapsedTimer()
+        deadline.start()
+        while nav.slide_animation.state()==C.QAbstractAnimation.State.Running and deadline.elapsed()<2000:
+            QTest.qWait(20)
+        self.assertEqual(nav.slide_animation.state(),C.QAbstractAnimation.State.Stopped)
         self.assertEqual(nav._selection,nav._target())
         nav.setTabEnabled(1,False)
         nav.setFocus()
